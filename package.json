@@ -3,9 +3,10 @@
   "version": "1.0.0",
   "description": "Security testing web app built for FER web2 course - 2023/2024",
   "scripts": {
+    "dev:infrastructure": "(docker compose up -d)",
     "dev:server": "(cd server && npm run dev)",
     "dev:client": "(cd client && npm run dev)",
-    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\""
+    "dev": "concurrently \"npm run dev:infrastructure\" \"npm run dev:server\" \"npm run dev:client\""
   },
   "repository": {
     "type": "git",
