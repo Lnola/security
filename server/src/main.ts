@@ -1,7 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import router from 'router';
-import errorHandler from 'shared/error/error-handler';
+import router from './router';
+import errorHandler from './shared/error/error-handler';
 
 dotenv.config();
 
