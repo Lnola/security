@@ -27,3 +27,19 @@ export const searchVulnarable = async (
     return next(new Error());
   }
 };
+
+export const searchSecure = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  console.log('secure');
+};
+
+export const resetUsersTable = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  console.log('reset');
+};
