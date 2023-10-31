@@ -11,6 +11,11 @@ const queries = {
       `SELECT username, email FROM users WHERE username = '${username}';`
     );
   },
+  searchSecure: (username: unknown) => {
+    return db.query('SELECT username, email FROM users WHERE username = $1', [
+      username,
+    ]);
+  },
 };
 
 const search = async (
@@ -44,7 +49,7 @@ export const searchSecure = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log('secure');
+  return search(queries.searchSecure, req, res, next);
 };
 
 export const resetUsersTable = async (
