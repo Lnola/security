@@ -49,6 +49,9 @@ export const searchSecure = async (
   res: Response,
   next: NextFunction
 ) => {
+  const username = req.query.username as string;
+  if (/[<>&'";=#@]/.test(username) || / or /i.test(username))
+    return next(new HttpError(BAD_REQUEST, 'Invalid characters'));
   return search(queries.searchSecure, req, res, next);
 };
 
