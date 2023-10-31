@@ -38,6 +38,16 @@
         </div>
       </form>
 
+      <div class="mt-4">
+        <Button @click="handleReset">Reset users table</Button>
+        <br />
+        <small>
+          To reset the table after truncation and
+          <br />
+          other table modification use this button
+        </small>
+      </div>
+
       <pre class="surface-100 border-round">{{ response }}</pre>
     </template>
   </Card>
@@ -51,7 +61,11 @@ import Card from 'primevue/card';
 import InputText from 'primevue/inputtext';
 import InputSwitch from 'primevue/inputswitch';
 import SyApply from '@/components/sy-apply.vue';
-import { searchSecure, searchVulnarable } from '@/api/sql-injection';
+import {
+  searchSecure,
+  searchVulnarable,
+  resetUsersTable,
+} from '@/api/sql-injection';
 
 const toast = useToast();
 
@@ -74,5 +88,24 @@ const onSubmit = async (e: Event) => {
   if (!input.value.length) return;
   const searchMethod = isSecure.value ? searchSecure : searchVulnarable;
   response.value = await searchMethod(input.value);
+};
+
+const handleReset = async () => {
+  try {
+    await resetUsersTable();
+    toast.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Database reset!',
+      life: 3000,
+    });
+  } catch (error) {
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Database reset failed!',
+      life: 3000,
+    });
+  }
 };
 </script>
