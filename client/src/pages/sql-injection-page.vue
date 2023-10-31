@@ -16,7 +16,7 @@
       <form @submit="onSubmit">
         <h3>Examples:</h3>
         <span>
-          <p class="m-0">Correct usage - search for with username user1</p>
+          <p class="m-0">Correct usage - search for with username user1:</p>
           <SyApply @click="apply" text="user1" />
         </span>
         <span>
