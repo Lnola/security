@@ -39,9 +39,11 @@ const initializeUsers = async () => {
     const tableEmpty = (await queries.checkTableEmpty()).rows[0].is_empty;
     if (tableEmpty) await queries.seedUsers();
     await queries.commitTransaction();
+    return true;
   } catch (error) {
     await queries.rollbackTransaction();
     console.error('Error:', error);
+    return false;
   }
 };
 
