@@ -19,5 +19,8 @@ const pool = new Pool({
   port: Number(POSTGRES_PORT),
 });
 
-export const query = (text: string, params?: any) => pool.query(text, params);
+export const query = (text: string, params?: any) => {
+  console.log(`RUNNING: ${text}`);
+  return pool.query(text, params);
+};
 export default { query };
