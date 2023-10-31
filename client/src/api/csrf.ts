@@ -16,6 +16,11 @@ type UpdatePasswordDto = {
   newPassword: string;
 };
 
+type VerifyPasswordDto = {
+  username: string;
+  password: string;
+};
+
 export const updatePasswordVulnarable = (
   params: UpdatePasswordDto,
 ): Promise<void> => {
@@ -28,4 +33,9 @@ export const updatePasswordSecure = (
 ): Promise<void> => {
   console.log(params);
   return Promise.reject();
+};
+
+export const verifyPassword = (params: VerifyPasswordDto): Promise<void> => {
+  console.log(params);
+  return Promise.resolve();
 };
