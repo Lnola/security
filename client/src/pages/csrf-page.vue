@@ -45,7 +45,7 @@
 
       <div class="flex gap-2 mt-4">
         <Button @click="showDialog">Verify password</Button>
-        <Button @click="showDialog">Reset user</Button>
+        <Button @click="handleReset">Reset user</Button>
       </div>
 
       <VerifyPassword v-model:is-dialog-visible="isDialogVisible" />
@@ -62,7 +62,11 @@ import InputText from 'primevue/inputtext';
 import InputSwitch from 'primevue/inputswitch';
 import Password from 'primevue/password';
 import VerifyPassword from '@/components/csrf/verify-password.vue';
-import { updatePasswordVulnarable, updatePasswordSecure } from '@/api/csrf';
+import {
+  updatePasswordVulnarable,
+  updatePasswordSecure,
+  resetUser,
+} from '@/api/csrf';
 
 const toast = useToast();
 
@@ -95,6 +99,26 @@ const changePassword = async (e: Event) => {
       severity: 'error',
       summary: 'Error',
       detail: 'Failed to update password!',
+      life: 3000,
+    });
+  }
+};
+
+const handleReset = async () => {
+  try {
+    await resetUser();
+    toast.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'User data reset!',
+      life: 3000,
+    });
+  } catch (error) {
+    console.error(error);
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'User data reset failed!',
       life: 3000,
     });
   }
