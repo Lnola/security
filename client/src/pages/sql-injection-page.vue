@@ -87,7 +87,17 @@ const onSubmit = async (e: Event) => {
   e.preventDefault();
   if (!input.value.length) return;
   const searchMethod = isSecure.value ? searchSecure : searchVulnarable;
-  response.value = await searchMethod(input.value);
+  try {
+    response.value = await searchMethod(input.value);
+  } catch (error) {
+    console.error(error);
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Request failed!',
+      life: 3000,
+    });
+  }
 };
 
 const handleReset = async () => {
@@ -100,6 +110,7 @@ const handleReset = async () => {
       life: 3000,
     });
   } catch (error) {
+    console.error(error);
     toast.add({
       severity: 'error',
       summary: 'Error',
