@@ -1,10 +1,12 @@
 <template>
+  <AppNav />
   <Toast />
   <RouterView />
 </template>
 
 <script setup lang="ts">
 import Toast from 'primevue/toast';
+import AppNav from '@/components/layout/app-nav.vue';
 </script>
 
 <style>
