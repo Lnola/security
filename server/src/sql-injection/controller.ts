@@ -3,6 +3,7 @@ import { BAD_REQUEST } from 'http-status';
 import db from '../shared/database';
 import HttpError from '../shared/error/http-error';
 import initializeUsers from 'shared/database/initialization/users';
+import { ValuesType } from 'utility-types';
 
 const queries = {
   searchVulnarable: (username: unknown) => {
@@ -12,21 +13,30 @@ const queries = {
   },
 };
 
-export const searchVulnarable = async (
+const search = async (
+  query: ValuesType<typeof queries>,
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    const username = req.query.username;
+    const { username } = req.query;
     if (!username)
       return next(new HttpError(BAD_REQUEST, 'Missing username parameter'));
-    const result = await queries.searchVulnarable(username);
+    const result = await query(username);
     return res.json(result.rows);
   } catch (error) {
     console.log(error);
     return next(new Error());
   }
+};
+
+export const searchVulnarable = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  return search(queries.searchVulnarable, req, res, next);
 };
 
 export const searchSecure = async (
