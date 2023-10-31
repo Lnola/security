@@ -39,3 +39,8 @@ export const verifyPassword = (params: VerifyPasswordDto): Promise<void> => {
   console.log(params);
   return Promise.resolve();
 };
+
+export const resetUser = (): Promise<void> => {
+  console.log('resetUser');
+  return Promise.resolve();
+};
