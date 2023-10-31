@@ -17,7 +17,12 @@
       <form @submit="changePassword" class="mt-4">
         <div class="flex flex-column gap-1">
           <label for="username">Username</label>
-          <InputText class="w-18rem" v-model="username" id="username" />
+          <InputText
+            class="w-18rem"
+            v-model="username"
+            id="username"
+            :disabled="true"
+          />
         </div>
         <div class="flex flex-column mt-3 gap-1">
           <label for="new_password">New Password</label>
