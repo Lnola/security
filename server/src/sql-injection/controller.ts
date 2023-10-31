@@ -2,11 +2,12 @@ import { Request, Response, NextFunction } from 'express';
 import { BAD_REQUEST } from 'http-status';
 import db from '../shared/database';
 import HttpError from '../shared/error/http-error';
+import initializeUsers from 'shared/database/initialization/users';
 
 const queries = {
   searchVulnarable: (username: unknown) => {
     return db.query(
-      `SELECT username FROM users WHERE username = '${username}';`
+      `SELECT username, email FROM users WHERE username = '${username}';`
     );
   },
 };
@@ -37,9 +38,11 @@ export const searchSecure = async (
 };
 
 export const resetUsersTable = async (
-  req: Request,
+  _req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  console.log('reset');
+  const wasInitialized = await initializeUsers();
+  if (!wasInitialized) return next(new Error());
+  return res.json();
 };
