@@ -16,6 +16,10 @@
       <form @submit="onSubmit">
         <h3>Examples:</h3>
         <span>
+          <p class="m-0">Correct usage - search for with username user1</p>
+          <SyApply @click="apply" text="user1" />
+        </span>
+        <span>
           <p class="m-0">To see the list of all users:</p>
           <SyApply @click="apply" text="' OR 1=1 OR '1" />
         </span>
@@ -33,6 +37,8 @@
           <InputSwitch v-model="isSecure" inputId="switch" />
         </div>
       </form>
+
+      <pre class="surface-100 border-round">{{ response }}</pre>
     </template>
   </Card>
 </template>
@@ -51,6 +57,7 @@ const toast = useToast();
 
 const input = ref('');
 const isSecure = ref(false);
+const response = ref<unknown>(null);
 
 const apply = (text: string) => {
   input.value = text;
@@ -66,7 +73,6 @@ const onSubmit = async (e: Event) => {
   e.preventDefault();
   if (!input.value.length) return;
   const searchMethod = isSecure.value ? searchSecure : searchVulnarable;
-  const data = await searchMethod(input.value);
-  console.log(data);
+  response.value = await searchMethod(input.value);
 };
 </script>
