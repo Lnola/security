@@ -1,5 +1,5 @@
 <template>
-  <Card class="h-full">
+  <Card class="app-content">
     <template #title>Sql injection</template>
     <template #content>
       <h3>Instructions:</h3>
