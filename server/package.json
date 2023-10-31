@@ -8,6 +8,7 @@
     "db:initialize": "rm -rf dist && tsc && node dist/shared/database/initialization/index.js"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "http-status": "^1.7.3",
@@ -16,6 +17,7 @@
     "utility-types": "^3.10.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.15",
     "@types/express": "^4.17.20",
     "@types/lodash": "^4.14.200",
     "@types/node": "^20.8.9",
