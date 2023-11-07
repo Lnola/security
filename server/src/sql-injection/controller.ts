@@ -31,7 +31,7 @@ const search = async (
     const result = await query(username);
     return res.json(result.rows);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return next(new Error());
   }
 };
