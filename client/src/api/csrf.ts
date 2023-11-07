@@ -1,15 +1,12 @@
-// import request from './request';
+import request from './request';
 // import { extractData } from './helpers';
 
-// const urls = {
-//   root: '/csrf',
-//   get vulnarable() {
-//     return this.root + '/vulnarable';
-//   },
-//   get secure() {
-//     return this.root + '/secure';
-//   },
-// };
+const urls = {
+  root: '/csrf',
+  get resetAdminTable() {
+    return this.root + '/reset-admin-table';
+  },
+};
 
 type UpdatePasswordDto = {
   username: string;
@@ -41,6 +38,5 @@ export const verifyPassword = (params: VerifyPasswordDto): Promise<void> => {
 };
 
 export const resetUser = (): Promise<void> => {
-  console.log('resetUser');
-  return Promise.resolve();
+  return request.post(urls.resetAdminTable);
 };
