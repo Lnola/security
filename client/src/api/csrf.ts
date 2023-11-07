@@ -2,6 +2,12 @@ import request from './request';
 
 const urls = {
   root: '/csrf',
+  get vulnarable() {
+    return this.root + '/vulnarable';
+  },
+  get secure() {
+    return this.root + '/secure';
+  },
   get verifyPassword() {
     return this.root + '/verify';
   },
