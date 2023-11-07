@@ -3,7 +3,7 @@ import { ValuesType } from 'utility-types';
 import { BAD_REQUEST, OK } from 'http-status';
 import db from '../shared/database';
 import HttpError from '../shared/error/http-error';
-import initializeUsers from 'shared/database/initialization/users';
+import initializeUsers from '../shared/database/initialization/users';
 
 const queries = {
   searchVulnarable: (username: unknown) => {
