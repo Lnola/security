@@ -88,7 +88,7 @@ const onSubmit = async (e: Event) => {
   if (!input.value.length) return;
   const searchMethod = isSecure.value ? searchSecure : searchVulnarable;
   try {
-    response.value = await searchMethod(input.value);
+    response.value = await searchMethod({ username: input.value });
   } catch (error) {
     console.error(error);
     toast.add({

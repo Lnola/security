@@ -14,13 +14,15 @@ const urls = {
   },
 };
 
-export const searchVulnarable = (username: string): Promise<string> => {
-  const params = { username };
+type SearchDto = {
+  username: string;
+};
+
+export const searchVulnarable = (params: SearchDto): Promise<string> => {
   return request.get(urls.vulnarable, { params }).then(extractData);
 };
 
-export const searchSecure = (username: string): Promise<string> => {
-  const params = { username };
+export const searchSecure = (params: SearchDto): Promise<string> => {
   return request.get(urls.secure, { params }).then(extractData);
 };
 
