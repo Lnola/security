@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import { BAD_REQUEST } from 'http-status';
+import { ValuesType } from 'utility-types';
+import { BAD_REQUEST, OK } from 'http-status';
 import db from '../shared/database';
 import HttpError from '../shared/error/http-error';
 import initializeUsers from 'shared/database/initialization/users';
-import { ValuesType } from 'utility-types';
 
 const queries = {
   searchVulnarable: (username: unknown) => {
@@ -62,5 +62,5 @@ export const resetUsersTable = async (
 ) => {
   const wasInitialized = await initializeUsers();
   if (!wasInitialized) return next(new Error());
-  return res.json();
+  return res.json(OK);
 };
