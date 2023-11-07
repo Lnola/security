@@ -23,11 +23,15 @@ const queries = {
       `INSERT INTO admin (username, password) VALUES ('admin', 'password');`
     );
   },
+  dropTableAdmin: () => {
+    return db.query(`DROP TABLE admin`);
+  },
 };
 
-const initializeAdmin = async () => {
+const initializeAdmin = async (shouldDropTable = false) => {
   try {
     await queries.beginTransaction();
+    if (shouldDropTable) await queries.dropTableAdmin();
     const tableExists = (await queries.checkTableExists()).rows[0].exists;
     if (!tableExists) await queries.createAdmin();
     await queries.seedAdmin();

@@ -29,11 +29,15 @@ const queries = {
     const users = times(30, createUser).join(',');
     return db.query(`INSERT INTO users (username, email) VALUES ${users};`);
   },
+  dropTableUsers: () => {
+    return db.query(`DROP TABLE users`);
+  },
 };
 
-const initializeUsers = async () => {
+const initializeUsers = async (shouldDropTable = false) => {
   try {
     await queries.beginTransaction();
+    if (shouldDropTable) await queries.dropTableUsers();
     const tableExists = (await queries.checkTableExists()).rows[0].exists;
     if (!tableExists) await queries.createUsers();
     const tableEmpty = (await queries.checkTableEmpty()).rows[0].is_empty;
