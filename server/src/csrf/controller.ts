@@ -31,7 +31,7 @@ export const resetAdminTable = async (
   res: Response,
   next: NextFunction
 ) => {
-  const wasInitialized = await initializeAdmin();
+  const wasInitialized = await initializeAdmin(true);
   if (!wasInitialized) return next(new Error());
   return res.json(OK);
 };

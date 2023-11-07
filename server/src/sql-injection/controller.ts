@@ -60,7 +60,7 @@ export const resetUsersTable = async (
   res: Response,
   next: NextFunction
 ) => {
-  const wasInitialized = await initializeUsers();
+  const wasInitialized = await initializeUsers(true);
   if (!wasInitialized) return next(new Error());
   return res.json(OK);
 };
