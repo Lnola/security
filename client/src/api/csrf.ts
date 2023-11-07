@@ -1,8 +1,10 @@
 import request from './request';
-// import { extractData } from './helpers';
 
 const urls = {
   root: '/csrf',
+  get verifyPassword() {
+    return this.root + '/verify';
+  },
   get resetAdminTable() {
     return this.root + '/reset-admin-table';
   },
@@ -33,8 +35,7 @@ export const updatePasswordSecure = (
 };
 
 export const verifyPassword = (params: VerifyPasswordDto): Promise<void> => {
-  console.log(params);
-  return Promise.resolve();
+  return request.get(urls.verifyPassword, { params });
 };
 
 export const resetUser = (): Promise<void> => {
