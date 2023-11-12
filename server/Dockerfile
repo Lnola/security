@@ -1,15 +1,14 @@
-FROM node:18
-
+FROM node:18-alpine AS builder
 WORKDIR /app
-
-COPY package.json ./
-COPY package-lock.json ./
-
-RUN npm ci
-
 COPY . .
-
-EXPOSE 3001
-
+RUN npm ci
 RUN npm run build
-RUN node ./dist/main.js
+
+FROM node:18-alpine AS final
+WORKDIR /app
+COPY --from=builder ./app/dist ./dist
+COPY package.json .
+COPY package-lock.json .
+RUN npm i --production
+EXPOSE 3001
+CMD npm run start
