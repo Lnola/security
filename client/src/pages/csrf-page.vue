@@ -14,6 +14,31 @@
         When the switch is set to <b>no security</b> CSRF is possible.
       </span>
 
+      <!-- THIS IS AN EXAMPLE OF HOW IT SHOULD WORK WITH THE TOKEN -->
+      <form @submit="changePassword" class="mt-4">
+        <div class="flex flex-column gap-1">
+          <label for="username">Username</label>
+          <InputText
+            class="w-18rem"
+            v-model="username"
+            id="username"
+            :disabled="true"
+          />
+        </div>
+        <div class="flex flex-column mt-3 gap-1">
+          <label for="new_password">New Password</label>
+          <Password
+            class="w-18rem"
+            v-model="newPassword"
+            :inputStyle="{ width: '100%' }"
+            :feedback="false"
+            inputId="new_password"
+            toggleMask
+          />
+        </div>
+        <Button class="mt-3" type="submit">Submit</Button>
+      </form>
+
       <RouterLink
         :to="{ name: 'Reroute', query: { isSecure: String(isSecure) } }"
       >
@@ -41,15 +66,43 @@ import { useToast } from 'primevue/usetoast';
 import Button from 'primevue/button';
 import Card from 'primevue/card';
 import InputSwitch from 'primevue/inputswitch';
+import InputText from 'primevue/inputtext';
+import Password from 'primevue/password';
 import VerifyPassword from '@/components/csrf/verify-password.vue';
-import { resetUser } from '@/api/csrf';
+import { resetUser, updatePasswordSecure } from '@/api/csrf';
 
 const toast = useToast();
 
+const username = ref('admin');
+const newPassword = ref('password');
 const isSecure = ref(false);
 const isDialogVisible = ref(false);
 
 const showDialog = () => (isDialogVisible.value = true);
+
+const changePassword = async (e: Event) => {
+  e.preventDefault();
+  try {
+    await updatePasswordSecure({
+      username: username.value,
+      newPassword: newPassword.value,
+    });
+    toast.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Password updated!',
+      life: 3000,
+    });
+  } catch (error) {
+    console.error(error);
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Failed to update password!',
+      life: 3000,
+    });
+  }
+};
 
 const handleReset = async () => {
   try {
