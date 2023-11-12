@@ -3,8 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import router from './router';
 import errorHandler from './shared/error/error-handler';
-import initializeAdmin from 'shared/database/initialization/admin';
-import initializeUsers from 'shared/database/initialization/users';
+import initializeAdmin from './shared/database/initialization/admin';
+import initializeUsers from './shared/database/initialization/users';
 
 dotenv.config();
 
