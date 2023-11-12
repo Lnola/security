@@ -4,11 +4,11 @@ services:
     name: security-server
     repo: https://github.com/Lnola/JS-Lectures
     branch: main
-    rootDir: /server
+    rootDir: server
     plan: free
     buildFilter:
       paths:
-        - /server/**
+        - server/**
     envVars:
       - key: POSTGRES_HOST
         fromDatabase:
