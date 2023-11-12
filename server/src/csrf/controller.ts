@@ -4,12 +4,23 @@ import db from '../shared/database';
 import initializeAdmin from '../shared/database/initialization/admin';
 import HttpError from 'shared/error/http-error';
 
+type UpdatePasswordDto = {
+  username: string;
+  newPassword: string;
+};
+
 type VerifyPasswordDto = {
   username: string;
   password: string;
 };
 
 const queries = {
+  updatePassword: ({ username, newPassword }: UpdatePasswordDto) => {
+    return db.query('UPDATE admin SET password = $1 WHERE username = $2;', [
+      newPassword,
+      username,
+    ]);
+  },
   getUserByUsernameAndPassword: ({ username, password }: VerifyPasswordDto) => {
     return db.query(
       'SELECT username, password FROM admin WHERE username = $1 AND password = $2;',
@@ -19,11 +30,18 @@ const queries = {
 };
 
 export const updatePasswordVulnarable = async (
-  _req: Request,
+  req: Request,
   res: Response,
-  _next: NextFunction
+  next: NextFunction
 ) => {
-  return res.json(OK);
+  try {
+    const { username, newPassword } = req.body;
+    await queries.updatePassword({ username, newPassword });
+    return res.json(OK);
+  } catch (error) {
+    console.error(error);
+    return next(new Error());
+  }
 };
 
 export const updatePasswordSecure = async (
