@@ -2,19 +2,14 @@
   <Card class="app-content">
     <template #title>Cross Site Request Forgery (CSRF)</template>
     <template #content>
-      <h3>Instructions:</h3>
-      <span>
-        This is a simple user password change form for the currently signed in
-        user. The default values are:
-        <pre class="my-0">username: admin</pre>
-        <pre class="my-0">password: password</pre>
+      <h3>Example of how the change password should work:</h3>
+      <p>
+        This should work always (doesn't depend on the security switch
+        position).
         <br />
-        When the switch is set to <b>secure</b> CSRF should not be possible.
-        <br />
-        When the switch is set to <b>no security</b> CSRF is possible.
-      </span>
-
-      <!-- THIS IS AN EXAMPLE OF HOW IT SHOULD WORK WITH THE TOKEN -->
+        (The default values for username and password are already set in the
+        inputs)
+      </p>
       <form @submit="changePassword" class="mt-4">
         <div class="flex flex-column gap-1">
           <label for="username">Username</label>
@@ -39,20 +34,45 @@
         <Button class="mt-3" type="submit">Submit</Button>
       </form>
 
+      <h3>Instructions:</h3>
       <RouterLink
         :to="{ name: 'Reroute', query: { isSecure: String(isSecure) } }"
       >
         Click this link to initiate the password change
       </RouterLink>
+      <p>
+        You will be redirected to another page which will try and update the
+        password.
+        <br />
+        When the switch is set to <b>no security</b> CSRF is possible and the
+        password will be updated to "123".
+        <br />
+        When the switch is set to <b>secure</b> CSRF should not be possible and
+        the password will not change.
+        <br />
+        You will see the alert stating whether the password has changed on the
+        routed page.
+      </p>
 
       <div class="flex align-items-center mt-4">
         <label class="mr-2" for="switch">Enable security</label>
         <InputSwitch v-model="isSecure" inputId="switch" />
       </div>
 
-      <div class="flex gap-2 mt-4">
-        <Button @click="showDialog">Verify password</Button>
-        <Button @click="handleReset">Reset user</Button>
+      <div class="flex flex-column mt-4 gap-2">
+        <div class="flex align-items-center gap-2">
+          <Button @click="showDialog">Verify password</Button>
+          <span>
+            (Use the verify password button to check the current password value)
+          </span>
+        </div>
+        <div class="flex align-items-center gap-2">
+          <Button @click="handleReset">Reset user</Button>
+          <span>
+            (Use the reset user button to reset the user password to the default
+            values)
+          </span>
+        </div>
       </div>
 
       <VerifyPassword v-model:is-dialog-visible="isDialogVisible" />
