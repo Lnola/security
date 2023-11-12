@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import { FORBIDDEN, OK } from 'http-status';
+import { BAD_REQUEST, FORBIDDEN, OK } from 'http-status';
 import db from '../shared/database';
 import initializeAdmin from '../shared/database/initialization/admin';
-import HttpError from 'shared/error/http-error';
+import HttpError from '../shared/error/http-error';
 
 type UpdatePasswordDto = {
   username: string;
@@ -36,6 +36,9 @@ export const updatePasswordVulnarable = async (
 ) => {
   try {
     const { username, newPassword } = req.body;
+    if (!username || !newPassword) {
+      return next(new HttpError(BAD_REQUEST, 'Missing params!'));
+    }
     await queries.updatePassword({ username, newPassword });
     return res.json(OK);
   } catch (error) {
