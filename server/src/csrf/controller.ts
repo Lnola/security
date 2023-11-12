@@ -10,7 +10,7 @@ type VerifyPasswordDto = {
 };
 
 const queries = {
-  getUserByDto: ({ username, password }: VerifyPasswordDto) => {
+  getUserByUsernameAndPassword: ({ username, password }: VerifyPasswordDto) => {
     return db.query(
       'SELECT username, password FROM admin WHERE username = $1 AND password = $2;',
       [username, password]
@@ -40,7 +40,7 @@ export const verifyPassword = async (
   next: NextFunction
 ) => {
   const dto = req.query as VerifyPasswordDto;
-  const user = (await queries.getUserByDto(dto)).rows[0];
+  const user = (await queries.getUserByUsernameAndPassword(dto)).rows[0];
   if (!user) {
     return next(new HttpError(FORBIDDEN, 'Invalid username or password!'));
   }
