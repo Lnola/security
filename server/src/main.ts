@@ -16,6 +16,7 @@ app.use(cors());
 app.use('/api', router);
 app.use(errorHandler);
 
+console.log('Environment is:', process.env.NODE_ENV);
 (async () => {
   if (process.env.NODE_ENV === 'production') {
     await initializeAdmin();
