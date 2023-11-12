@@ -62,11 +62,7 @@ import InputText from 'primevue/inputtext';
 import InputSwitch from 'primevue/inputswitch';
 import Password from 'primevue/password';
 import VerifyPassword from '@/components/csrf/verify-password.vue';
-import {
-  updatePasswordVulnarable,
-  updatePasswordSecure,
-  resetUser,
-} from '@/api/csrf';
+import { updatePasswordVulnarable, resetUser } from '@/api/csrf';
 
 const toast = useToast();
 
@@ -80,10 +76,7 @@ const showDialog = () => (isDialogVisible.value = true);
 const changePassword = async (e: Event) => {
   e.preventDefault();
   try {
-    const updatePasswordMethod = isSecure.value
-      ? updatePasswordSecure
-      : updatePasswordVulnarable;
-    await updatePasswordMethod({
+    await updatePasswordVulnarable({
       username: username.value,
       newPassword: newPassword.value,
     });
