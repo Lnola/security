@@ -35,8 +35,7 @@ export const updatePasswordVulnarable = (
 export const updatePasswordSecure = (
   params: UpdatePasswordDto,
 ): Promise<void> => {
-  console.log(params);
-  return Promise.reject();
+  return request.post(urls.secure, { ...params });
 };
 
 export const verifyPassword = (params: VerifyPasswordDto): Promise<void> => {

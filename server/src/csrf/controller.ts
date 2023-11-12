@@ -48,11 +48,21 @@ export const updatePasswordVulnarable = async (
 };
 
 export const updatePasswordSecure = async (
-  _req: Request,
+  req: Request,
   res: Response,
-  _next: NextFunction
+  next: NextFunction
 ) => {
-  return res.json(OK);
+  try {
+    const { username, newPassword } = req.body;
+    if (!username || !newPassword) {
+      return next(new HttpError(BAD_REQUEST, 'Missing params!'));
+    }
+    await queries.updatePassword({ username, newPassword });
+    return res.json(OK);
+  } catch (error) {
+    console.error(error);
+    return next(new Error());
+  }
 };
 
 export const verifyPassword = async (
