@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npx tsc",
     "dev": "nodemon -r tsconfig-paths/register src/main.ts",
-    "start": "node dist/main.js",
+    "start": "NODE_ENV=production node dist/main.js",
     "db:initialize": "node dist/shared/database/initialization/index.js",
     "dev-db:initialize": "rm -rf dist && tsc && node dist/shared/database/initialization/index.js"
   },
