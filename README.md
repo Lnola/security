@@ -2,6 +2,10 @@
 
 Security testing web app built for FER web2 course - 2023/2024
 
+# Live demo
+
+The demo is currently live on [Render](https://security-client.onrender.com)
+
 ## Running the project
 
 ### Requirements
