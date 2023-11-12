@@ -3,7 +3,6 @@ WORKDIR /app
 COPY . .
 RUN npm ci
 RUN npm run build
-RUN npm run db:initialize
 
 FROM node:18-alpine AS final
 WORKDIR /app
@@ -12,4 +11,5 @@ COPY package.json .
 COPY package-lock.json .
 RUN npm ci --production
 EXPOSE 3001
+RUN npm run db:initialize
 CMD npm run start
