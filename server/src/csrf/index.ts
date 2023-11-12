@@ -9,8 +9,8 @@ import {
 const router = Router();
 const path = '/csrf';
 
-router.get('/vulnarable', updatePasswordVulnarable);
-router.get('/secure', updatePasswordSecure);
+router.post('/vulnarable', updatePasswordVulnarable);
+router.post('/secure', updatePasswordSecure);
 router.get('/verify', verifyPassword);
 router.post('/reset-admin-table', resetAdminTable);
 
