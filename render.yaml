@@ -1,0 +1,38 @@
+services:
+  - type: web
+    env: docker
+    name: security-server
+    repo: https://github.com/Lnola/JS-Lectures
+    branch: main
+    rootDir: server
+    plan: free
+    buildFilter:
+      paths:
+        - server/**
+    envVars:
+      - key: POSTGRES_HOST
+        fromDatabase:
+          name: security-db
+          property: host
+      - key: POSTGRES_DB
+        fromDatabase:
+          name: security-db
+          property: database
+      - key: POSTGRES_USER
+        fromDatabase:
+          name: security-db
+          property: user
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: security-db
+          property: password
+      - key: POSTGRES_PORT
+        fromDatabase:
+          name: security-db
+          property: port
+      - key: PORT
+        value: 3001
+
+databases:
+  - name: security-db
+    plan: free
