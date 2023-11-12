@@ -29,8 +29,7 @@ type VerifyPasswordDto = {
 export const updatePasswordVulnarable = (
   params: UpdatePasswordDto,
 ): Promise<void> => {
-  console.log(params);
-  return Promise.resolve();
+  return request.post(urls.vulnarable, { ...params });
 };
 
 export const updatePasswordSecure = (
