@@ -11,14 +11,6 @@ const {
   POSTGRES_PORT,
 } = process.env;
 
-console.log(
-  POSTGRES_HOST,
-  POSTGRES_DB,
-  POSTGRES_USER,
-  POSTGRES_PASSWORD,
-  POSTGRES_PORT
-);
-
 const pool = new Pool({
   host: POSTGRES_HOST,
   database: POSTGRES_DB,
