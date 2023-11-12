@@ -14,6 +14,12 @@
         When the switch is set to <b>no security</b> CSRF is possible.
       </span>
 
+      <RouterLink
+        :to="{ name: 'Reroute', query: { isSecure: String(isSecure) } }"
+      >
+        Click this link to initiate the password change
+      </RouterLink>
+
       <!-- <form @submit="changePassword" class="mt-4">
         <div class="flex flex-column gap-1">
           <label for="username">Username</label>
@@ -37,11 +43,12 @@
         </div>
         <Button class="mt-3" type="submit">Submit</Button>
 
-        <div class="flex align-items-center mt-4">
-          <label class="mr-2" for="switch">Enable security</label>
-          <InputSwitch v-model="isSecure" inputId="switch" />
-        </div>
-      </form> -->
+      -->
+      <div class="flex align-items-center mt-4">
+        <label class="mr-2" for="switch">Enable security</label>
+        <InputSwitch v-model="isSecure" inputId="switch" />
+      </div>
+      <!-- </form>  -->
 
       <div class="flex gap-2 mt-4">
         <Button @click="showDialog">Verify password</Button>
@@ -59,7 +66,7 @@ import { useToast } from 'primevue/usetoast';
 import Button from 'primevue/button';
 import Card from 'primevue/card';
 // import InputText from 'primevue/inputtext';
-// import InputSwitch from 'primevue/inputswitch';
+import InputSwitch from 'primevue/inputswitch';
 // import Password from 'primevue/password';
 import VerifyPassword from '@/components/csrf/verify-password.vue';
 import {
@@ -71,7 +78,7 @@ const toast = useToast();
 
 // const username = ref('admin');
 // const newPassword = ref('password');
-// const isSecure = ref(false);
+const isSecure = ref(false);
 const isDialogVisible = ref(false);
 
 const showDialog = () => (isDialogVisible.value = true);
