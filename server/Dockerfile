@@ -11,4 +11,4 @@ COPY package.json .
 COPY package-lock.json .
 RUN npm ci --production
 EXPOSE 3001
-CMD npm run start
+ENTRYPOINT npm run start && npm run db:initialize
