@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { BAD_REQUEST, FORBIDDEN, OK } from 'http-status';
+import { v4 as uuid } from 'uuid';
 import db from '../shared/database';
 import initializeAdmin from '../shared/database/initialization/admin';
 import HttpError from '../shared/error/http-error';
@@ -12,6 +13,13 @@ type UpdatePasswordDto = {
 type VerifyPasswordDto = {
   username: string;
   password: string;
+};
+
+let csrf_token: string;
+
+const regenerateToken = () => {
+  csrf_token = uuid();
+  return csrf_token;
 };
 
 const queries = {
@@ -27,6 +35,12 @@ const queries = {
       [username, password]
     );
   },
+};
+
+// in a real use case this method would require further safety measures
+export const getToken = (_req: Request, res: Response) => {
+  const token = regenerateToken();
+  return res.json(token);
 };
 
 export const updatePasswordVulnarable = async (
@@ -53,12 +67,17 @@ export const updatePasswordSecure = async (
   next: NextFunction
 ) => {
   try {
+    const { token } = req.body;
+    if (!token || token !== csrf_token) {
+      return next(new HttpError(FORBIDDEN, 'CSRF attack!'));
+    }
+    const newToken = regenerateToken();
     const { username, newPassword } = req.body;
     if (!username || !newPassword) {
       return next(new HttpError(BAD_REQUEST, 'Missing params!'));
     }
     await queries.updatePassword({ username, newPassword });
-    return res.json(OK);
+    return res.json(newToken);
   } catch (error) {
     console.error(error);
     return next(new Error());

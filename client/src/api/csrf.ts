@@ -1,7 +1,11 @@
 import request from './request';
+import { extractData } from './helpers';
 
 const urls = {
   root: '/csrf',
+  get token() {
+    return this.root + '/token';
+  },
   get vulnarable() {
     return this.root + '/vulnarable';
   },
@@ -21,9 +25,17 @@ type UpdatePasswordDto = {
   newPassword: string;
 };
 
+type UpdatePasswordSecureDto = UpdatePasswordDto & {
+  token: string | null;
+};
+
 type VerifyPasswordDto = {
   username: string;
   password: string;
+};
+
+export const fetchToken = () => {
+  return request.get(urls.token).then(extractData);
 };
 
 export const updatePasswordVulnarable = (
@@ -33,9 +45,9 @@ export const updatePasswordVulnarable = (
 };
 
 export const updatePasswordSecure = (
-  params: UpdatePasswordDto,
-): Promise<void> => {
-  return request.post(urls.secure, { ...params });
+  params: UpdatePasswordSecureDto,
+): Promise<string> => {
+  return request.post(urls.secure, { ...params }).then(extractData);
 };
 
 export const verifyPassword = (params: VerifyPasswordDto): Promise<void> => {

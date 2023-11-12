@@ -81,7 +81,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useToast } from 'primevue/usetoast';
 import Button from 'primevue/button';
 import Card from 'primevue/card';
@@ -89,7 +89,7 @@ import InputSwitch from 'primevue/inputswitch';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import VerifyPassword from '@/components/csrf/verify-password.vue';
-import { resetUser, updatePasswordSecure } from '@/api/csrf';
+import { fetchToken, updatePasswordSecure, resetUser } from '@/api/csrf';
 
 const toast = useToast();
 
@@ -97,15 +97,21 @@ const username = ref('admin');
 const newPassword = ref('password');
 const isSecure = ref(false);
 const isDialogVisible = ref(false);
+const token = ref<string | null>(null);
+
+onMounted(async () => {
+  token.value = await fetchToken();
+});
 
 const showDialog = () => (isDialogVisible.value = true);
 
 const changePassword = async (e: Event) => {
   e.preventDefault();
   try {
-    await updatePasswordSecure({
+    token.value = await updatePasswordSecure({
       username: username.value,
       newPassword: newPassword.value,
+      token: token.value,
     });
     toast.add({
       severity: 'success',

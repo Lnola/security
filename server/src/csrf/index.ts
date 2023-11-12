@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import {
+  getToken,
   updatePasswordVulnarable,
   updatePasswordSecure,
   resetAdminTable,
@@ -9,6 +10,7 @@ import {
 const router = Router();
 const path = '/csrf';
 
+router.get('/token', getToken);
 router.post('/vulnarable', updatePasswordVulnarable);
 router.post('/secure', updatePasswordSecure);
 router.get('/verify', verifyPassword);
